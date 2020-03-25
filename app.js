@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
 const dotenv = require("dotenv");
-
+const PORT = process.env.PORT || 5000;
 dotenv.config();
 
 // Initialize the app
@@ -53,6 +53,11 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mevn_auth
 //     return res.send("<h1>Hello World</h1>");
 // });
 
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('public/index.html'));
+}
+
 // Bring in the Persons route
 const persons = require('./routes/api/persons');
 app.use('/api/persons', persons);
@@ -61,13 +66,6 @@ const users = require('./routes/api/users');
 app.use('/api/users', users);
 
 
-
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('public/index.html'));
-}
-
-
-const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
