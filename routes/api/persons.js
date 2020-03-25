@@ -2,31 +2,31 @@ const express = require("express");
 const { check, validationResult } = require("express-validator");
 const moment = require("moment");
 const Person = require("../../model/Person");
-const multer = require("multer");
+// const multer = require("multer");
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + file.originalname);
-    }
-})
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, './uploads/');
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, Date.now() + file.originalname);
+//     }
+// })
 
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/gif') {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-}
+// const fileFilter = (req, file, cb) => {
+//     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/gif') {
+//         cb(null, true);
+//     } else {
+//         cb(null, false);
+//     }
+// }
 
-const upload = multer({
-    storage: storage, limits: {
-        fileSize: 1024 * 1024 * 10
-    },
-    fileFilter: fileFilter
-})
+// const upload = multer({
+//     storage: storage, limits: {
+//         fileSize: 1024 * 1024 * 10
+//     },
+//     fileFilter: fileFilter
+// })
 
 const router = express.Router();
 moment.locale("sv");
@@ -72,7 +72,6 @@ router.get("/:id", async (req, res) => {
  */
 router.post(
     "/",
-    upload.single('image'),
     [
         check("name", "Namn får inte vara tomt").notEmpty(),
         check("month", "Månad får inte vara tomt").notEmpty(),
@@ -94,11 +93,7 @@ router.post(
                 day,
                 year
             });
-            if (req.file && req.file.filename) {
-                console.log({ reqFikle: req.file });
-                person.image = req.file.filename
 
-            }
             await person.save();
             res.status(200).send(person);
         } catch (err) {
