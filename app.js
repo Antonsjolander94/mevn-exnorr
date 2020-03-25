@@ -38,7 +38,7 @@ require('./config/passport')(passport);
 // Bring in the Database Config and connect with the database
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mevn_auth', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: false,
     useFindAndModify: false
 }).then(() => {
     console.log(`Database connected successfully ${process.env.MONGODB_URI}`)
