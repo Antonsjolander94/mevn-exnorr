@@ -39,7 +39,10 @@ require('./config/passport')(passport);
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mevn_auth', {
     useNewUrlParser: true,
     useUnifiedTopology: false,
-    useFindAndModify: false
+    useFindAndModify: false,
+    user: process.env.MONGODB_USER, // IMPORTANT TO HAVE IT HERE AND NOT IN CONNECTION STRING
+    pass: process.env.MONGODB_PASS, // IMPORTANT TO HAVE IT HERE AND NOT IN CONNECTION STRING
+    dbName: process.env.MONGODB_DBNAME, // IMPORTANT TO HAVE IT HERE AND NOT IN CONNECTION STRING
 }).then(() => {
     console.log(`Database connected successfully ${process.env.MONGODB_URI}`)
 }).catch(err => {
