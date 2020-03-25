@@ -131,7 +131,7 @@ router.delete("/:id", async (req, res) => {
  * @param - /
  * @description - Update Person
  */
-router.put("/:id", upload.single('image'), async (req, res) => {
+router.put("/:id", async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -141,9 +141,6 @@ router.put("/:id", upload.single('image'), async (req, res) => {
     try {
         const filter = { _id: req.params.id };
         let update = { ...req.body };
-        if (req.file && req.file.path) {
-            update.image = req.file.path
-        }
         await Person.findOneAndUpdate(
             filter,
             update,
