@@ -63,7 +63,7 @@ app.use('/api/users', users);
 
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(__dirname, 'public/index.html'));
+    app.use(express.static('public/index.html'));
 }
 
 
