@@ -11,7 +11,7 @@ const getters = {
 };
 const actions = {
     async fetchPersons({ commit }) {
-        const { data } = await axios.get(URL + 'all');
+        const { data } = await axios.get(`${URL}all`);
         if (Array.isArray(data)) {
             let birthdays = data.filter(person => person.daysLeft == 0);
             if (birthdays && birthdays.length > 0) {
