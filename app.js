@@ -38,7 +38,7 @@ require('./config/passport')(passport);
 // Bring in the Database Config and connect with the database
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: false,
+    useUnifiedTopology: true,
     useFindAndModify: false,
     user: process.env.MONGODB_USER, // IMPORTANT TO HAVE IT HERE AND NOT IN CONNECTION STRING
     pass: process.env.MONGODB_PASS, // IMPORTANT TO HAVE IT HERE AND NOT IN CONNECTION STRING
