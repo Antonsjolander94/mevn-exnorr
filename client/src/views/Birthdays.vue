@@ -1,23 +1,20 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <div class="birthday-container">
-          <BirthdayPersonList
-            v-if="allbirthdayPersons && allbirthdayPersons.length > 0"
-            :persons="allbirthdayPersons"
-          />
-        </div>
-      </b-col>
-    </b-row>
-  </b-container>
+  <div class="birthdays">
+    <div class="birthday-container" v-if="allbirthdayPersons && allbirthdayPersons.length > 0">
+      <BirthdayPersonList :persons="allbirthdayPersons" />
+    </div>
+    <Carousel v-else />
+  </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import Carousel from "@/components/Birthdays/Carousel";
 import BirthdayPersonList from "@/components/Birthday/BirthdayPersonList";
+
 export default {
   components: {
+    Carousel,
     BirthdayPersonList
   },
   methods: {
@@ -26,12 +23,23 @@ export default {
   computed: {
     ...mapGetters(["allbirthdayPersons"])
   },
-  created() {
-    this.fetchPersons();
+  beforeMount() {},
+  mounted: function() {
+    this.$nextTick(function() {
+      // Will be executed when the DOM is ready
+      console.log("asd");
+      this.fetchPersons();
+    });
   }
 };
 </script>
-<style lang="scss" scoped>
+
+<style lang="scss" >
+.birthdays {
+  background: black;
+  height: 100vh;
+  overflow: hidden;
+}
 .birthday-container {
   display: flex;
   flex-direction: column;

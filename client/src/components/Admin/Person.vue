@@ -1,37 +1,57 @@
 <template>
-  <b-list-group-item class="text-white">
-    <b-img class="person-img" v-if="url" fluid :src="url"></b-img>
-    <strong>{{person.fullName}}</strong>
-    <div class="buttons">
-      <b-button @click="editPerson(person)" variant="outline-secondary">edit</b-button>
-      <b-button @click="delPerson(person._id)" variant="outline-secondary" class="ml-3">x</b-button>
+  <b-list-group-item>
+    <b-img class="person-image" v-if="person.image" fluid :src="getImgUrl" :alt="person.name" />
+    <p class="mb-0">{{person.name}}</p>
+    <div class="d-flex flex-row align-items-center justify-content-center">
+      <p class="mb-0">{{person.year}}-</p>
+      <p class="mb-0">
+        <template v-if="person.month < 10">
+          <span>0{{person.month}}-</span>
+        </template>
+        <template v-else>{{person.month}}-</template>
+      </p>
+      <p class="mb-0">
+        <template v-if="person.day < 10">
+          <span>0{{person.day}}</span>
+        </template>
+        <template v-else>{{person.day}}</template>
+      </p>
+    </div>
+    <div class="b-list-group-actions">
+      <b-button variant="outline-secondary" @click="editPerson(person)">
+        <BIconPencil />
+      </b-button>
+      <b-button variant="outline-danger" @click="deletePerson(person._id)">
+        <BIconTrash />
+      </b-button>
     </div>
   </b-list-group-item>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { BIconPencil, BIconTrash } from "bootstrap-vue";
 export default {
   props: ["person"],
-  data() {
-    return {
-      edit: false,
-      url: ""
-    };
-  },
-  mounted() {
-    this.combinePersonUrl();
+  components: {
+    BIconPencil,
+    BIconTrash
   },
   methods: {
+    ...mapActions(["deleteThePerson"]),
+    async deletePerson(id) {
+      if (window.confirm("Ta bort personen?")) {
+        await this.deleteThePerson(id);
+        this.$emit("deletedPerson");
+      }
+    },
     editPerson(person) {
       this.$emit("editPerson", person);
-    },
-    delPerson(id) {
-      this.$emit("deletePerson", id);
-    },
-    combinePersonUrl() {
-      if (this.person && this.person.image) {
-        this.url = `${process.env.VUE_APP_IMGURL}${this.person.image}`;
-      }
+    }
+  },
+  computed: {
+    getImgUrl: function() {
+      return `http://localhost:5000/uploads/${this.person.image}`;
     }
   }
 };
@@ -42,22 +62,22 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
-  min-height: 70px;
-  background-color: rgba($color: grey, $alpha: 0.3);
-  p {
-    margin: 0;
-  }
+
   &:hover {
-    background-color: rgba($color: grey, $alpha: 0.5);
-  }
-  .person-img {
-    max-width: 100px;
   }
 
-  .buttons {
+  .person-image {
+    max-width: 10%;
+  }
+  .b-list-group-actions {
     display: flex;
     align-items: center;
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-left: 5px;
+    }
   }
 }
 </style>

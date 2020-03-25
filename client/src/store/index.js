@@ -1,13 +1,14 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import persons from "./modules/persons";
-import controller from "./modules/controller";
+import Vue from 'vue'
+import Vuex from 'vuex'
+import auth from "./modules/auth"
+import persons from "./modules/persons"
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
+
   modules: {
-    persons,
-    controller
+    auth,
+    persons
   }
-});
+})

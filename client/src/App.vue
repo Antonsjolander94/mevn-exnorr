@@ -1,12 +1,33 @@
 <template>
   <div id="app">
-    <main id="main">
-      <transition name="fade">
-        <router-view :key="$route.fullPath" />
-      </transition>
-    </main>
+    <Errors v-if="error" :msg="error" />
+    <Navbar v-if="isLoggedIn" />
+    <vue-page-transition name="fade-in-left">
+      <router-view />
+    </vue-page-transition>
   </div>
 </template>
 
 
+<script>
+import { mapGetters, mapActions } from "vuex";
+import Navbar from "@/components/Navbar";
+import Errors from "@/components/Errors";
+
+export default {
+  components: {
+    Navbar,
+    Errors
+  },
+  computed: {
+    ...mapGetters(["isLoggedIn", "error"])
+  },
+  methods: {
+    ...mapActions(["fetchPersons"])
+  },
+  created() {
+    this.fetchPersons();
+  }
+};
+</script>
 

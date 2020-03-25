@@ -1,93 +1,64 @@
 <template>
-  <div class="slideshow">
+  <div class="page-flux-slider">
     <vue-flux
-      v-if="vfImages && vfImages.length > 0"
       :options="vfOptions"
-      :images="vfImages"
+      :images="images"
       :transitions="vfTransitions"
+      :captions="vfCaptions"
       ref="slider"
-    ></vue-flux>
-    <Clock />
+    >
+      <template v-slot:preloader>
+        <flux-preloader />
+      </template>
+    </vue-flux>
   </div>
 </template>
 
 <script>
-import { VueFlux } from "vue-flux";
-import { mapActions } from "vuex";
-import Clock from "@/components/Slideshow/Clock";
+import {
+  VueFlux,
+  //   FluxCaption,
+  //   FluxControls,
+  //   FluxIndex,
+  //   FluxPagination,
+  FluxPreloader
+} from "vue-flux";
 
 export default {
   components: {
     VueFlux,
-    Clock
-  },
-  data: () => ({
-    vfImages: [],
-    vfTransitions: ["concentric", "warp", "camera"],
-    words: [
-      "lappland",
-      "northern",
-      "scandinavia",
-      "stockholm",
-      "new-york",
-      "wallpapers",
-      "backgrounds",
-      "nature",
-      "swedish"
-    ],
-    vfOptions: {
-      autoPlay: true,
-      infinite: true,
-      lazyLoad: true,
-      lazyLoadAfter: 1
-    }
-  }),
-  created() {
-    this.changeRoute();
-    this.fetchImages();
-    this.startInterval();
+    // FluxCaption,
+    // FluxControls,
+    // FluxIndex,
+    // FluxPagination,
+    FluxPreloader
   },
 
-  watch: {
-    "$route.fullPath": {
-      immediate: true, // Immediate option to call watch handler on first mount
-      handler() {
-        this.vfImages = [];
-        console.log("asd");
-        console.log(this.vfImages);
-      }
-    }
-  },
-  methods: {
-    ...mapActions(["pushOverview"]),
-    changeRoute() {
-      setTimeout(() => {
-        this.pushOverview();
-      }, 60 * 3 * 1000);
+  data: () => ({
+    vfOptions: {
+      autoplay: true
     },
-    startInterval: function() {
-      setInterval(() => {
-        if (this.vfImages.length > 0 && this.$refs.slider) {
-          this.$refs.slider.show("next");
-        }
-      }, 10000);
-    },
-    async fetchImages() {
-      this.vfImages = [];
-      let images = this.words.map(word => {
-        return `https://source.unsplash.com/1920x1080/?${word}`;
-      });
-      this.vfImages = images;
-    }
-  }
+    vfImages: ["URL1", "URL2", "URL3"],
+    images: [
+      "https://source.unsplash.com/SiFizC6pD9o/1920x1080",
+      "https://source.unsplash.com/-81lVsfM4gQ/1920x1080",
+      "https://source.unsplash.com/DcQ8dSqEosA/1920x1080",
+      "https://source.unsplash.com/8spo0Sr00j8/1920x1080",
+      "https://source.unsplash.com/Du8sGaNHVMc/1920x1080"
+    ],
+    vfTransitions: ["zip", "blinds2d", "round1", "swipe"],
+    vfCaptions: [
+      "Caption for image 1",
+      "Caption for image 2",
+      "Caption for image 3"
+    ]
+  })
 };
 </script>
 
 <style lang="scss" scoped>
-.slideshow {
-  background-color: $black;
+.page-flux-slider {
   height: 100vh;
   overflow: hidden;
-  position: relative;
 }
 </style>

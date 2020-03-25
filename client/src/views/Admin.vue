@@ -1,16 +1,15 @@
 <template>
-  <div class="container">
-    <div class="row mb-5">
-      <div class="col-12">
-        <PersonList></PersonList>
-      </div>
-    </div>
-  </div>
+  <b-container class="pt-5">
+    <b-row class="pt-5">
+      <b-col cols="12">
+        <PersonList />
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
 import PersonList from "@/components/Admin/PersonList";
-
 export default {
   components: {
     PersonList
@@ -18,5 +17,3 @@ export default {
 };
 </script>
 
-<style>
-</style>
