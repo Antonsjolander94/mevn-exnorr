@@ -14,15 +14,16 @@ const actions = {
         const { data } = await axios.get(URL);
         if (data) {
             const birthdays = data.filter(person => person.daysLeft == 0);
+            if (birthdays && birthdays.length > 0) {
+                console.log("birthdays", birthdays)
+                commit("SET_BIRTHDAY_PERSONS", birthdays);
+            } else {
+                console.log("no birthdays")
+                commit("SET_BIRTHDAY_PERSONS", null)
+            }
+            commit("SET_PERSONS", data);
         }
-        if (birthdays && birthdays.length > 0) {
-            console.log("birthdays", birthdays)
-            commit("SET_BIRTHDAY_PERSONS", birthdays);
-        } else {
-            console.log("no birthdays")
-            commit("SET_BIRTHDAY_PERSONS", null)
-        }
-        commit("SET_PERSONS", data);
+
     },
     async fetchPersonById({ commit }, id) {
         const { data } = await axios.get(URL + id);
