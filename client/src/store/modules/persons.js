@@ -11,10 +11,8 @@ const getters = {
 };
 const actions = {
     async fetchPersons({ commit }) {
-        const { data } = await axios.get(`${URL}all`);
-        fetch('https://jsonplaceholder.typicode.com/todos/1')
-            .then(response => response.json())
-            .then(json => console.log(json))
+        const { data } = await axios.get(URL);
+
         console.log({ data: data })
         if (Array.isArray(data)) {
             let birthdays = data.filter(person => person.daysLeft == 0);

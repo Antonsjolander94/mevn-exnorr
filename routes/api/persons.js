@@ -36,21 +36,23 @@ moment.locale("sv");
  * @param - /
  * @description - Get Persons
  */
-router.get("/all", async (req, res) => {
+router.get("/", async (req, res) => {
     // Person.find({}, (err, persons) => {
     //     if (err) return res.status(400).send(err);
     //     let result = orderByDate(persons);
     //     res.status(200).json(persons)
     // })
 
-    Person.find({}, async function (err, users) {
-        if (err) {
-            res.send("error");
-            next();
-        }
-        let result = await orderByDate(users);
-        res.json(result)
-    })
+    res.send(await Person.find({}).toArray());
+
+    // Person.find({}, async function (err, users) {
+    //     if (err) {
+    //         res.send("error");
+    //         next();
+    //     }
+    //     let result = await orderByDate(users);
+    //     res.json(result)
+    // })
 });
 
 /**

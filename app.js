@@ -54,9 +54,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 // });
 
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('public/index.html'));
-}
 
 // Bring in the Persons route
 const persons = require('./routes/api/persons');
@@ -65,6 +62,14 @@ app.use('/api/persons', persons);
 const users = require('./routes/api/users');
 app.use('/api/users', users);
 
+// Handle production
+if (process.env.NODE_ENV === 'production') {
+    // Static folder
+    app.use(express.static(__dirname + '/public/'));
+
+    // Handle SPA
+    app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+}
 
 
 app.listen(PORT, () => {
