@@ -10,6 +10,9 @@
     "client": "npm run serve --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
+  "engines": {
+    "node": "13.x"
+  },
   "author": "Anton Sjölander",
   "license": "ISC",
   "dependencies": {
