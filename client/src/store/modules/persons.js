@@ -21,8 +21,8 @@ const actions = {
                 console.log("no birthdays")
                 commit("SET_BIRTHDAY_PERSONS", null)
             }
-            commit("SET_PERSONS", data);
         }
+        commit("SET_PERSONS", data);
 
     },
     async fetchPersonById({ commit }, id) {
