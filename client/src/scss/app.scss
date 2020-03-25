@@ -1,0 +1,50 @@
+@import "~bootstrap";
+@import "~bootstrap-vue";
+
+html,
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  background-color: $black;
+}
+#app,
+main {
+  height: 100%;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.flux-image {
+  background-size: cover !important;
+  background-position: center !important;
+  width: 100% !important;
+}
+.vue-flux {
+}
+
+.carousel-3d-slide {
+  &.current {
+    .app-slide-info {
+      opacity: 1 !important;
+      transform: translateY(300px);
+    }
+    .app-slide-duttar {
+      opacity: 1 !important;
+      transform: translateY(0px) !important;
+    }
+    .glasses {
+      opacity: 1 !important;
+      transform: translateY(171px) translateX(32px) rotate(-8deg) !important;
+      transform-origin: center;
+    }
+  }
+}
