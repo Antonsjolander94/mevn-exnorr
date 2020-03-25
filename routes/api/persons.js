@@ -36,15 +36,15 @@ moment.locale("sv");
  * @param - /
  * @description - Get Persons
  */
-router.get("/", async (req, res) => {
+router.get("/all", async (req, res) => {
     try {
         let persons = await Person.find({});
         let result = await orderByDate(persons);
         console.log(result);
-        res.status(200).send(result);
+        return res.status(200).send(result);
     } catch (error) {
         console.log(error.message);
-        res.status(500).send("Något gick fel");
+        return res.status(500).send("Något gick fel");
     }
 });
 
