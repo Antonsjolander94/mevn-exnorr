@@ -22,7 +22,7 @@ const actions = {
                 commit("SET_BIRTHDAY_PERSONS", null)
             }
         }
-        if (data && data.length > 0) {
+        if (Array.isArray(data)) {
             commit("SET_PERSONS", data);
             alert(data)
         }

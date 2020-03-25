@@ -37,15 +37,20 @@ moment.locale("sv");
  * @description - Get Persons
  */
 router.get("/all", async (req, res) => {
-    try {
-        let persons = await Person.find({});
-        let result = await orderByDate(persons);
-        console.log(result);
-        return res.status(200).send(result);
-    } catch (error) {
-        console.log(error.message);
-        return res.status(500).send("Något gick fel");
-    }
+    // Person.find({}, (err, persons) => {
+    //     if (err) return res.status(400).send(err);
+    //     let result = orderByDate(persons);
+    //     res.status(200).json(persons)
+    // })
+
+    Person.find({}, async function (err, users) {
+        if (err) {
+            res.send("error");
+            next();
+        }
+        let result = await orderByDate(users);
+        res.json(result)
+    })
 });
 
 /**
@@ -183,7 +188,6 @@ async function orderByDate(arr) {
             .set({ year: year, month: month - 1, date: day })
             .format();
         person.birthday = birthday;
-        person.fullName = `${person.forename} ${person.surname}`;
         var a = moment(birthday);
         var b = moment(today);
         person.daysLeft = Math.ceil(a.diff(b, "days"));
