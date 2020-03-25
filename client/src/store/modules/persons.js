@@ -11,7 +11,7 @@ const getters = {
 };
 const actions = {
     async fetchPersons({ commit }) {
-        const { data } = await axios.get(URL);
+        const { data } = await axios.post(URL);
 
         console.log({ data: data })
         if (Array.isArray(data)) {
@@ -65,7 +65,7 @@ const actions = {
                     });
                 console.log(response)
             } else {
-                const { data } = await axios.post(URL, {
+                const { data } = await axios.post(URL + "person", {
                     name,
                     month,
                     day,

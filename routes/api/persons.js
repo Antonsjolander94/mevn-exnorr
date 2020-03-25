@@ -36,7 +36,7 @@ moment.locale("sv");
  * @param - /
  * @description - Get Persons
  */
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
     // Person.find({}, (err, persons) => {
     //     if (err) return res.status(400).send(err);
     //     let result = orderByDate(persons);
@@ -73,7 +73,7 @@ router.get("/:id", async (req, res) => {
  * @description - Add Person
  */
 router.post(
-    "/",
+    "/person",
     [
         check("name", "Namn får inte vara tomt").notEmpty(),
         check("month", "Månad får inte vara tomt").notEmpty(),
