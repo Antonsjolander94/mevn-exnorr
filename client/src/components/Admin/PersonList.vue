@@ -1,14 +1,16 @@
 <template>
   <b-list-group class="mb-5">
     <AddPerson @addedPerson="fetchPersons" class="mb-3"></AddPerson>
-    <EditPerson @editedPerson="resetEdit" :person="person"></EditPerson>
-    <Person
-      @deletedPerson="fetchPersons"
-      @editPerson="editPerson"
-      v-for="(person, index) in allPersons"
-      :key="index"
-      :person="person"
-    />
+    <template v-if="allPersons && allPersons.length > 0">
+      <EditPerson @editedPerson="resetEdit" :person="person"></EditPerson>
+      <Person
+        @deletedPerson="fetchPersons"
+        @editPerson="editPerson"
+        v-for="(person, index) in allPersons"
+        :key="index"
+        :person="person"
+      />
+    </template>
   </b-list-group>
 </template>
 

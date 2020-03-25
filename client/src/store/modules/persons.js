@@ -22,7 +22,9 @@ const actions = {
                 commit("SET_BIRTHDAY_PERSONS", null)
             }
         }
-        commit("SET_PERSONS", data);
+        if (data && data.length > 0) {
+            commit("SET_PERSONS", data);
+        }
 
     },
     async fetchPersonById({ commit }, id) {
