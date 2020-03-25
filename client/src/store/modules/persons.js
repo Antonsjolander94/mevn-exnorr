@@ -12,7 +12,9 @@ const getters = {
 const actions = {
     async fetchPersons({ commit }) {
         const { data } = await axios.get(URL);
-        const birthdays = data.filter(person => person.daysLeft == 0);
+        if (data) {
+            const birthdays = data.filter(person => person.daysLeft == 0);
+        }
         if (birthdays && birthdays.length > 0) {
             console.log("birthdays", birthdays)
             commit("SET_BIRTHDAY_PERSONS", birthdays);
